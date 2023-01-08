@@ -4,13 +4,15 @@ import Head from "next/head";
 import { getServerAuthSession } from "../../server/auth";
 import SideBar from "@/components/SideBar";
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
     return {
         props: {
             session: await getServerAuthSession(context),
         },
     };
-}
+};
 
 const Dashboard: NextPage = () => {
     // const { data: session, status } = useSession();
@@ -33,7 +35,7 @@ const Dashboard: NextPage = () => {
                     content="Create, Edit and View book highlights"
                 />{" "}
             </Head>
-            <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+            <main className="min-h-screen bg-white">
                 <SideBar />
             </main>
         </>
