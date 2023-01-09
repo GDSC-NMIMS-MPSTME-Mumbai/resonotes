@@ -2,6 +2,7 @@ import type { FC } from "react";
 import BookList from "./BookList";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
+import User from "./User";
 
 const SideBar: FC = () => {
     const books = [
@@ -45,6 +46,8 @@ const SideBar: FC = () => {
                 <SearchBar query={query} setQuery={setQuery} />
             </div>
             <BookList books={books} filter={query.toLowerCase()} />
+            <hr className="mt-4 w-11/12 border-t border-gray-300" />
+            <User />
         </div>
     );
 };
