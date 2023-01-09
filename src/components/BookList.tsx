@@ -14,7 +14,7 @@ interface Props {
 
 const BookList: FC<Props> = ({ books, filter }) => {
     return (
-        <ul className="scrollbar-rounded-sm max-h-full overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-black scrollbar-thumb-rounded-md">
+        <ul className="scrollbar-rounded-sm max-h-full flex-1 overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-black scrollbar-thumb-rounded-md">
             {books
                 .filter((book) => book.title.toLowerCase().includes(filter))
                 .map((book, id) => (
