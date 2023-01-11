@@ -21,6 +21,10 @@ export const serverSchema = z.object({
   ),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  GOOGLE_BUCKET_NAME: z.string(),
+  GOOGLE_CLIENT_EMAIL: z.string(),
+  GOOGLE_PRIVATE_KEY: z.string(),
+  GOOGLE_PROJECT_ID: z.string(),
 });
 
 /**

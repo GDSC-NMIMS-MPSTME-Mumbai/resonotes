@@ -14,8 +14,6 @@ export const BookScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.BookSc
 
 export const ExampleScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.ExampleScalarFieldEnum);
 
-export const HighlightScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.HighlightScalarFieldEnum);
-
 export const QueryModeSchema = z.nativeEnum(PrismaClient.Prisma.QueryMode);
 
 export const SessionScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.SessionScalarFieldEnum);
@@ -133,23 +131,6 @@ export const BookOptionalDefaultsSchema = BookSchema.merge(
   })
 );
 
-// HIGHLIGHT
-//------------------------------------------------------
-
-export const HighlightSchema = z.object({
-  id: z.number().int(),
-  page: z.number().int(),
-  highlight: z.string(),
-  voice: z.boolean(),
-  combination: z.number().int(),
-});
-
-export const HighlightOptionalDefaultsSchema = HighlightSchema.merge(
-  z.object({
-    id: z.number().int().optional(),
-  })
-);
-
 /////////////////////////////////////////
 // SELECT & INCLUDE
 /////////////////////////////////////////
@@ -257,51 +238,10 @@ export const VerificationTokenSelectSchema: z.ZodType<PrismaClient.Prisma.Verifi
 // BOOK
 //------------------------------------------------------
 
-export const BookArgsSchema: z.ZodType<PrismaClient.Prisma.BookArgs> = z.object({
-  select: z.lazy(() => BookSelectSchema).optional(),
-  include: z.lazy(() => BookIncludeSchema).optional(),
-}).strict();
-
-export const BookIncludeSchema: z.ZodType<PrismaClient.Prisma.BookInclude> = z.object({
-  Highlight: z.union([z.boolean(), z.lazy(() => HighlightFindManyArgsSchema)]).optional(),
-  _count: z.union([z.boolean(), z.lazy(() => BookCountOutputTypeArgsSchema)]).optional(),
-}).strict();
-
-export const BookCountOutputTypeArgsSchema: z.ZodType<PrismaClient.Prisma.BookCountOutputTypeArgs> = z.object({
-  select: z.lazy(() => BookCountOutputTypeSelectSchema).nullish(),
-}).strict();
-
-export const BookCountOutputTypeSelectSchema: z.ZodType<PrismaClient.Prisma.BookCountOutputTypeSelect> = z.object({
-  Highlight: z.boolean().optional(),
-}).strict();
-
 export const BookSelectSchema: z.ZodType<PrismaClient.Prisma.BookSelect> = z.object({
   id: z.boolean().optional(),
   user: z.boolean().optional(),
   book: z.boolean().optional(),
-  Highlight: z.union([z.boolean(), z.lazy(() => HighlightFindManyArgsSchema)]).optional(),
-  _count: z.union([z.boolean(), z.lazy(() => BookCountOutputTypeArgsSchema)]).optional(),
-}).strict();
-
-// HIGHLIGHT
-//------------------------------------------------------
-
-export const HighlightArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightArgs> = z.object({
-  select: z.lazy(() => HighlightSelectSchema).optional(),
-  include: z.lazy(() => HighlightIncludeSchema).optional(),
-}).strict();
-
-export const HighlightIncludeSchema: z.ZodType<PrismaClient.Prisma.HighlightInclude> = z.object({
-  Book: z.union([z.boolean(), z.lazy(() => BookArgsSchema)]).optional(),
-}).strict();
-
-export const HighlightSelectSchema: z.ZodType<PrismaClient.Prisma.HighlightSelect> = z.object({
-  id: z.boolean().optional(),
-  page: z.boolean().optional(),
-  highlight: z.boolean().optional(),
-  voice: z.boolean().optional(),
-  combination: z.boolean().optional(),
-  Book: z.union([z.boolean(), z.lazy(() => BookArgsSchema)]).optional(),
 }).strict();
 
 /////////////////////////////////////////
@@ -562,14 +502,12 @@ export const BookWhereInputSchema: z.ZodType<PrismaClient.Prisma.BookWhereInput>
   id: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
   user: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
   book: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
-  Highlight: z.lazy(() => HighlightListRelationFilterSchema).optional(),
 }).strict();
 
 export const BookOrderByWithRelationInputSchema: z.ZodType<PrismaClient.Prisma.BookOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   user: z.lazy(() => SortOrderSchema).optional(),
   book: z.lazy(() => SortOrderSchema).optional(),
-  Highlight: z.lazy(() => HighlightOrderByRelationAggregateInputSchema).optional(),
 }).strict();
 
 export const BookWhereUniqueInputSchema: z.ZodType<PrismaClient.Prisma.BookWhereUniqueInput> = z.object({
@@ -594,55 +532,6 @@ export const BookScalarWhereWithAggregatesInputSchema: z.ZodType<PrismaClient.Pr
   id: z.union([z.lazy(() => IntWithAggregatesFilterSchema), z.number()]).optional(),
   user: z.union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()]).optional(),
   book: z.union([z.lazy(() => IntWithAggregatesFilterSchema), z.number()]).optional(),
-}).strict();
-
-export const HighlightWhereInputSchema: z.ZodType<PrismaClient.Prisma.HighlightWhereInput> = z.object({
-  AND: z.union([z.lazy(() => HighlightWhereInputSchema), z.lazy(() => HighlightWhereInputSchema).array()]).optional(),
-  OR: z.lazy(() => HighlightWhereInputSchema).array().optional(),
-  NOT: z.union([z.lazy(() => HighlightWhereInputSchema), z.lazy(() => HighlightWhereInputSchema).array()]).optional(),
-  id: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
-  page: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
-  highlight: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
-  voice: z.union([z.lazy(() => BoolFilterSchema), z.boolean()]).optional(),
-  combination: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
-  Book: z.union([z.lazy(() => BookRelationFilterSchema), z.lazy(() => BookWhereInputSchema)]).optional(),
-}).strict();
-
-export const HighlightOrderByWithRelationInputSchema: z.ZodType<PrismaClient.Prisma.HighlightOrderByWithRelationInput> = z.object({
-  id: z.lazy(() => SortOrderSchema).optional(),
-  page: z.lazy(() => SortOrderSchema).optional(),
-  highlight: z.lazy(() => SortOrderSchema).optional(),
-  voice: z.lazy(() => SortOrderSchema).optional(),
-  combination: z.lazy(() => SortOrderSchema).optional(),
-  Book: z.lazy(() => BookOrderByWithRelationInputSchema).optional(),
-}).strict();
-
-export const HighlightWhereUniqueInputSchema: z.ZodType<PrismaClient.Prisma.HighlightWhereUniqueInput> = z.object({
-  id: z.number().int().optional(),
-}).strict();
-
-export const HighlightOrderByWithAggregationInputSchema: z.ZodType<PrismaClient.Prisma.HighlightOrderByWithAggregationInput> = z.object({
-  id: z.lazy(() => SortOrderSchema).optional(),
-  page: z.lazy(() => SortOrderSchema).optional(),
-  highlight: z.lazy(() => SortOrderSchema).optional(),
-  voice: z.lazy(() => SortOrderSchema).optional(),
-  combination: z.lazy(() => SortOrderSchema).optional(),
-  _count: z.lazy(() => HighlightCountOrderByAggregateInputSchema).optional(),
-  _avg: z.lazy(() => HighlightAvgOrderByAggregateInputSchema).optional(),
-  _max: z.lazy(() => HighlightMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => HighlightMinOrderByAggregateInputSchema).optional(),
-  _sum: z.lazy(() => HighlightSumOrderByAggregateInputSchema).optional(),
-}).strict();
-
-export const HighlightScalarWhereWithAggregatesInputSchema: z.ZodType<PrismaClient.Prisma.HighlightScalarWhereWithAggregatesInput> = z.object({
-  AND: z.union([z.lazy(() => HighlightScalarWhereWithAggregatesInputSchema), z.lazy(() => HighlightScalarWhereWithAggregatesInputSchema).array()]).optional(),
-  OR: z.lazy(() => HighlightScalarWhereWithAggregatesInputSchema).array().optional(),
-  NOT: z.union([z.lazy(() => HighlightScalarWhereWithAggregatesInputSchema), z.lazy(() => HighlightScalarWhereWithAggregatesInputSchema).array()]).optional(),
-  id: z.union([z.lazy(() => IntWithAggregatesFilterSchema), z.number()]).optional(),
-  page: z.union([z.lazy(() => IntWithAggregatesFilterSchema), z.number()]).optional(),
-  highlight: z.union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()]).optional(),
-  voice: z.union([z.lazy(() => BoolWithAggregatesFilterSchema), z.boolean()]).optional(),
-  combination: z.union([z.lazy(() => IntWithAggregatesFilterSchema), z.number()]).optional(),
 }).strict();
 
 export const ExampleCreateInputSchema: z.ZodType<PrismaClient.Prisma.ExampleCreateInput> = z.object({
@@ -948,27 +837,23 @@ export const VerificationTokenUncheckedUpdateManyInputSchema: z.ZodType<PrismaCl
 export const BookCreateInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookCreateInput, "user">> = z.object({
   // omitted: user: z.string(),
   book: z.number().int(),
-  Highlight: z.lazy(() => HighlightCreateNestedManyWithoutBookInputSchema).optional(),
 }).strict();
 
 export const BookUncheckedCreateInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUncheckedCreateInput, "user">> = z.object({
   id: z.number().int().optional(),
   // omitted: user: z.string(),
   book: z.number().int(),
-  Highlight: z.lazy(() => HighlightUncheckedCreateNestedManyWithoutBookInputSchema).optional(),
 }).strict();
 
 export const BookUpdateInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUpdateInput, "user">> = z.object({
   // omitted: user: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   book: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  Highlight: z.lazy(() => HighlightUpdateManyWithoutBookNestedInputSchema).optional(),
 }).strict();
 
 export const BookUncheckedUpdateInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUncheckedUpdateInput, "user">> = z.object({
   id: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
   // omitted: user: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   book: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  Highlight: z.lazy(() => HighlightUncheckedUpdateManyWithoutBookNestedInputSchema).optional(),
 }).strict();
 
 export const BookCreateManyInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookCreateManyInput, "user">> = z.object({
@@ -986,58 +871,6 @@ export const BookUncheckedUpdateManyInputSchema: z.ZodType<Omit<PrismaClient.Pri
   id: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
   // omitted: user: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   book: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-}).strict();
-
-export const HighlightCreateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateInput> = z.object({
-  page: z.number().int(),
-  highlight: z.string(),
-  voice: z.boolean(),
-  Book: z.lazy(() => BookCreateNestedOneWithoutHighlightInputSchema),
-}).strict();
-
-export const HighlightUncheckedCreateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUncheckedCreateInput> = z.object({
-  id: z.number().int().optional(),
-  page: z.number().int(),
-  highlight: z.string(),
-  voice: z.boolean(),
-  combination: z.number().int(),
-}).strict();
-
-export const HighlightUpdateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUpdateInput> = z.object({
-  page: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  highlight: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  voice: z.union([z.boolean(), z.lazy(() => BoolFieldUpdateOperationsInputSchema)]).optional(),
-  Book: z.lazy(() => BookUpdateOneRequiredWithoutHighlightNestedInputSchema).optional(),
-}).strict();
-
-export const HighlightUncheckedUpdateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUncheckedUpdateInput> = z.object({
-  id: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  page: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  highlight: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  voice: z.union([z.boolean(), z.lazy(() => BoolFieldUpdateOperationsInputSchema)]).optional(),
-  combination: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-}).strict();
-
-export const HighlightCreateManyInputSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateManyInput> = z.object({
-  id: z.number().int().optional(),
-  page: z.number().int(),
-  highlight: z.string(),
-  voice: z.boolean(),
-  combination: z.number().int(),
-}).strict();
-
-export const HighlightUpdateManyMutationInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUpdateManyMutationInput> = z.object({
-  page: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  highlight: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  voice: z.union([z.boolean(), z.lazy(() => BoolFieldUpdateOperationsInputSchema)]).optional(),
-}).strict();
-
-export const HighlightUncheckedUpdateManyInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUncheckedUpdateManyInput> = z.object({
-  id: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  page: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  highlight: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  voice: z.union([z.boolean(), z.lazy(() => BoolFieldUpdateOperationsInputSchema)]).optional(),
-  combination: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
 }).strict();
 
 export const StringFilterSchema: z.ZodType<PrismaClient.Prisma.StringFilter> = z.object({
@@ -1363,16 +1196,6 @@ export const IntFilterSchema: z.ZodType<PrismaClient.Prisma.IntFilter> = z.objec
   not: z.union([z.number(), z.lazy(() => NestedIntFilterSchema)]).optional(),
 }).strict();
 
-export const HighlightListRelationFilterSchema: z.ZodType<PrismaClient.Prisma.HighlightListRelationFilter> = z.object({
-  every: z.lazy(() => HighlightWhereInputSchema).optional(),
-  some: z.lazy(() => HighlightWhereInputSchema).optional(),
-  none: z.lazy(() => HighlightWhereInputSchema).optional(),
-}).strict();
-
-export const HighlightOrderByRelationAggregateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightOrderByRelationAggregateInput> = z.object({
-  _count: z.lazy(() => SortOrderSchema).optional(),
-}).strict();
-
 export const BookCountOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.BookCountOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   user: z.lazy(() => SortOrderSchema).optional(),
@@ -1415,60 +1238,6 @@ export const IntWithAggregatesFilterSchema: z.ZodType<PrismaClient.Prisma.IntWit
   _sum: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedIntFilterSchema).optional(),
   _max: z.lazy(() => NestedIntFilterSchema).optional(),
-}).strict();
-
-export const BoolFilterSchema: z.ZodType<PrismaClient.Prisma.BoolFilter> = z.object({
-  equals: z.boolean().optional(),
-  not: z.union([z.boolean(), z.lazy(() => NestedBoolFilterSchema)]).optional(),
-}).strict();
-
-export const BookRelationFilterSchema: z.ZodType<PrismaClient.Prisma.BookRelationFilter> = z.object({
-  is: z.lazy(() => BookWhereInputSchema).optional(),
-  isNot: z.lazy(() => BookWhereInputSchema).optional(),
-}).strict();
-
-export const HighlightCountOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightCountOrderByAggregateInput> = z.object({
-  id: z.lazy(() => SortOrderSchema).optional(),
-  page: z.lazy(() => SortOrderSchema).optional(),
-  highlight: z.lazy(() => SortOrderSchema).optional(),
-  voice: z.lazy(() => SortOrderSchema).optional(),
-  combination: z.lazy(() => SortOrderSchema).optional(),
-}).strict();
-
-export const HighlightAvgOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightAvgOrderByAggregateInput> = z.object({
-  id: z.lazy(() => SortOrderSchema).optional(),
-  page: z.lazy(() => SortOrderSchema).optional(),
-  combination: z.lazy(() => SortOrderSchema).optional(),
-}).strict();
-
-export const HighlightMaxOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightMaxOrderByAggregateInput> = z.object({
-  id: z.lazy(() => SortOrderSchema).optional(),
-  page: z.lazy(() => SortOrderSchema).optional(),
-  highlight: z.lazy(() => SortOrderSchema).optional(),
-  voice: z.lazy(() => SortOrderSchema).optional(),
-  combination: z.lazy(() => SortOrderSchema).optional(),
-}).strict();
-
-export const HighlightMinOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightMinOrderByAggregateInput> = z.object({
-  id: z.lazy(() => SortOrderSchema).optional(),
-  page: z.lazy(() => SortOrderSchema).optional(),
-  highlight: z.lazy(() => SortOrderSchema).optional(),
-  voice: z.lazy(() => SortOrderSchema).optional(),
-  combination: z.lazy(() => SortOrderSchema).optional(),
-}).strict();
-
-export const HighlightSumOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.HighlightSumOrderByAggregateInput> = z.object({
-  id: z.lazy(() => SortOrderSchema).optional(),
-  page: z.lazy(() => SortOrderSchema).optional(),
-  combination: z.lazy(() => SortOrderSchema).optional(),
-}).strict();
-
-export const BoolWithAggregatesFilterSchema: z.ZodType<PrismaClient.Prisma.BoolWithAggregatesFilter> = z.object({
-  equals: z.boolean().optional(),
-  not: z.union([z.boolean(), z.lazy(() => NestedBoolWithAggregatesFilterSchema)]).optional(),
-  _count: z.lazy(() => NestedIntFilterSchema).optional(),
-  _min: z.lazy(() => NestedBoolFilterSchema).optional(),
-  _max: z.lazy(() => NestedBoolFilterSchema).optional(),
 }).strict();
 
 export const StringFieldUpdateOperationsInputSchema: z.ZodType<PrismaClient.Prisma.StringFieldUpdateOperationsInput> = z.object({
@@ -1607,72 +1376,12 @@ export const SessionUncheckedUpdateManyWithoutUserNestedInputSchema: z.ZodType<P
   deleteMany: z.union([z.lazy(() => SessionScalarWhereInputSchema), z.lazy(() => SessionScalarWhereInputSchema).array()]).optional(),
 }).strict();
 
-export const HighlightCreateNestedManyWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateNestedManyWithoutBookInput> = z.object({
-  create: z.union([z.lazy(() => HighlightCreateWithoutBookInputSchema), z.lazy(() => HighlightCreateWithoutBookInputSchema).array(), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema).array()]).optional(),
-  connectOrCreate: z.union([z.lazy(() => HighlightCreateOrConnectWithoutBookInputSchema), z.lazy(() => HighlightCreateOrConnectWithoutBookInputSchema).array()]).optional(),
-  createMany: z.lazy(() => HighlightCreateManyBookInputEnvelopeSchema).optional(),
-  connect: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-}).strict();
-
-export const HighlightUncheckedCreateNestedManyWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUncheckedCreateNestedManyWithoutBookInput> = z.object({
-  create: z.union([z.lazy(() => HighlightCreateWithoutBookInputSchema), z.lazy(() => HighlightCreateWithoutBookInputSchema).array(), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema).array()]).optional(),
-  connectOrCreate: z.union([z.lazy(() => HighlightCreateOrConnectWithoutBookInputSchema), z.lazy(() => HighlightCreateOrConnectWithoutBookInputSchema).array()]).optional(),
-  createMany: z.lazy(() => HighlightCreateManyBookInputEnvelopeSchema).optional(),
-  connect: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-}).strict();
-
 export const IntFieldUpdateOperationsInputSchema: z.ZodType<PrismaClient.Prisma.IntFieldUpdateOperationsInput> = z.object({
   set: z.number().optional(),
   increment: z.number().optional(),
   decrement: z.number().optional(),
   multiply: z.number().optional(),
   divide: z.number().optional(),
-}).strict();
-
-export const HighlightUpdateManyWithoutBookNestedInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUpdateManyWithoutBookNestedInput> = z.object({
-  create: z.union([z.lazy(() => HighlightCreateWithoutBookInputSchema), z.lazy(() => HighlightCreateWithoutBookInputSchema).array(), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema).array()]).optional(),
-  connectOrCreate: z.union([z.lazy(() => HighlightCreateOrConnectWithoutBookInputSchema), z.lazy(() => HighlightCreateOrConnectWithoutBookInputSchema).array()]).optional(),
-  upsert: z.union([z.lazy(() => HighlightUpsertWithWhereUniqueWithoutBookInputSchema), z.lazy(() => HighlightUpsertWithWhereUniqueWithoutBookInputSchema).array()]).optional(),
-  createMany: z.lazy(() => HighlightCreateManyBookInputEnvelopeSchema).optional(),
-  set: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-  disconnect: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-  delete: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-  connect: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-  update: z.union([z.lazy(() => HighlightUpdateWithWhereUniqueWithoutBookInputSchema), z.lazy(() => HighlightUpdateWithWhereUniqueWithoutBookInputSchema).array()]).optional(),
-  updateMany: z.union([z.lazy(() => HighlightUpdateManyWithWhereWithoutBookInputSchema), z.lazy(() => HighlightUpdateManyWithWhereWithoutBookInputSchema).array()]).optional(),
-  deleteMany: z.union([z.lazy(() => HighlightScalarWhereInputSchema), z.lazy(() => HighlightScalarWhereInputSchema).array()]).optional(),
-}).strict();
-
-export const HighlightUncheckedUpdateManyWithoutBookNestedInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUncheckedUpdateManyWithoutBookNestedInput> = z.object({
-  create: z.union([z.lazy(() => HighlightCreateWithoutBookInputSchema), z.lazy(() => HighlightCreateWithoutBookInputSchema).array(), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema).array()]).optional(),
-  connectOrCreate: z.union([z.lazy(() => HighlightCreateOrConnectWithoutBookInputSchema), z.lazy(() => HighlightCreateOrConnectWithoutBookInputSchema).array()]).optional(),
-  upsert: z.union([z.lazy(() => HighlightUpsertWithWhereUniqueWithoutBookInputSchema), z.lazy(() => HighlightUpsertWithWhereUniqueWithoutBookInputSchema).array()]).optional(),
-  createMany: z.lazy(() => HighlightCreateManyBookInputEnvelopeSchema).optional(),
-  set: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-  disconnect: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-  delete: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-  connect: z.union([z.lazy(() => HighlightWhereUniqueInputSchema), z.lazy(() => HighlightWhereUniqueInputSchema).array()]).optional(),
-  update: z.union([z.lazy(() => HighlightUpdateWithWhereUniqueWithoutBookInputSchema), z.lazy(() => HighlightUpdateWithWhereUniqueWithoutBookInputSchema).array()]).optional(),
-  updateMany: z.union([z.lazy(() => HighlightUpdateManyWithWhereWithoutBookInputSchema), z.lazy(() => HighlightUpdateManyWithWhereWithoutBookInputSchema).array()]).optional(),
-  deleteMany: z.union([z.lazy(() => HighlightScalarWhereInputSchema), z.lazy(() => HighlightScalarWhereInputSchema).array()]).optional(),
-}).strict();
-
-export const BookCreateNestedOneWithoutHighlightInputSchema: z.ZodType<PrismaClient.Prisma.BookCreateNestedOneWithoutHighlightInput> = z.object({
-  create: z.union([z.lazy(() => BookCreateWithoutHighlightInputSchema), z.lazy(() => BookUncheckedCreateWithoutHighlightInputSchema)]).optional(),
-  connectOrCreate: z.lazy(() => BookCreateOrConnectWithoutHighlightInputSchema).optional(),
-  connect: z.lazy(() => BookWhereUniqueInputSchema).optional(),
-}).strict();
-
-export const BoolFieldUpdateOperationsInputSchema: z.ZodType<PrismaClient.Prisma.BoolFieldUpdateOperationsInput> = z.object({
-  set: z.boolean().optional(),
-}).strict();
-
-export const BookUpdateOneRequiredWithoutHighlightNestedInputSchema: z.ZodType<PrismaClient.Prisma.BookUpdateOneRequiredWithoutHighlightNestedInput> = z.object({
-  create: z.union([z.lazy(() => BookCreateWithoutHighlightInputSchema), z.lazy(() => BookUncheckedCreateWithoutHighlightInputSchema)]).optional(),
-  connectOrCreate: z.lazy(() => BookCreateOrConnectWithoutHighlightInputSchema).optional(),
-  upsert: z.lazy(() => BookUpsertWithoutHighlightInputSchema).optional(),
-  connect: z.lazy(() => BookWhereUniqueInputSchema).optional(),
-  update: z.union([z.lazy(() => BookUpdateWithoutHighlightInputSchema), z.lazy(() => BookUncheckedUpdateWithoutHighlightInputSchema)]).optional(),
 }).strict();
 
 export const NestedStringFilterSchema: z.ZodType<PrismaClient.Prisma.NestedStringFilter> = z.object({
@@ -1861,19 +1570,6 @@ export const NestedFloatFilterSchema: z.ZodType<PrismaClient.Prisma.NestedFloatF
   gt: z.number().optional(),
   gte: z.number().optional(),
   not: z.union([z.number(), z.lazy(() => NestedFloatFilterSchema)]).optional(),
-}).strict();
-
-export const NestedBoolFilterSchema: z.ZodType<PrismaClient.Prisma.NestedBoolFilter> = z.object({
-  equals: z.boolean().optional(),
-  not: z.union([z.boolean(), z.lazy(() => NestedBoolFilterSchema)]).optional(),
-}).strict();
-
-export const NestedBoolWithAggregatesFilterSchema: z.ZodType<PrismaClient.Prisma.NestedBoolWithAggregatesFilter> = z.object({
-  equals: z.boolean().optional(),
-  not: z.union([z.boolean(), z.lazy(() => NestedBoolWithAggregatesFilterSchema)]).optional(),
-  _count: z.lazy(() => NestedIntFilterSchema).optional(),
-  _min: z.lazy(() => NestedBoolFilterSchema).optional(),
-  _max: z.lazy(() => NestedBoolFilterSchema).optional(),
 }).strict();
 
 export const UserCreateWithoutAccountsInputSchema: z.ZodType<PrismaClient.Prisma.UserCreateWithoutAccountsInput> = z.object({
@@ -2088,88 +1784,6 @@ export const SessionScalarWhereInputSchema: z.ZodType<PrismaClient.Prisma.Sessio
   expires: z.union([z.lazy(() => DateTimeFilterSchema), z.date()]).optional(),
 }).strict();
 
-export const HighlightCreateWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateWithoutBookInput> = z.object({
-  page: z.number(),
-  highlight: z.string(),
-  voice: z.boolean(),
-}).strict();
-
-export const HighlightUncheckedCreateWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUncheckedCreateWithoutBookInput> = z.object({
-  id: z.number().optional(),
-  page: z.number(),
-  highlight: z.string(),
-  voice: z.boolean(),
-}).strict();
-
-export const HighlightCreateOrConnectWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateOrConnectWithoutBookInput> = z.object({
-  where: z.lazy(() => HighlightWhereUniqueInputSchema),
-  create: z.union([z.lazy(() => HighlightCreateWithoutBookInputSchema), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema)]),
-}).strict();
-
-export const HighlightCreateManyBookInputEnvelopeSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateManyBookInputEnvelope> = z.object({
-  data: z.lazy(() => HighlightCreateManyBookInputSchema).array(),
-  skipDuplicates: z.boolean().optional(),
-}).strict();
-
-export const HighlightUpsertWithWhereUniqueWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUpsertWithWhereUniqueWithoutBookInput> = z.object({
-  where: z.lazy(() => HighlightWhereUniqueInputSchema),
-  update: z.union([z.lazy(() => HighlightUpdateWithoutBookInputSchema), z.lazy(() => HighlightUncheckedUpdateWithoutBookInputSchema)]),
-  create: z.union([z.lazy(() => HighlightCreateWithoutBookInputSchema), z.lazy(() => HighlightUncheckedCreateWithoutBookInputSchema)]),
-}).strict();
-
-export const HighlightUpdateWithWhereUniqueWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUpdateWithWhereUniqueWithoutBookInput> = z.object({
-  where: z.lazy(() => HighlightWhereUniqueInputSchema),
-  data: z.union([z.lazy(() => HighlightUpdateWithoutBookInputSchema), z.lazy(() => HighlightUncheckedUpdateWithoutBookInputSchema)]),
-}).strict();
-
-export const HighlightUpdateManyWithWhereWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUpdateManyWithWhereWithoutBookInput> = z.object({
-  where: z.lazy(() => HighlightScalarWhereInputSchema),
-  data: z.union([z.lazy(() => HighlightUpdateManyMutationInputSchema), z.lazy(() => HighlightUncheckedUpdateManyWithoutHighlightInputSchema)]),
-}).strict();
-
-export const HighlightScalarWhereInputSchema: z.ZodType<PrismaClient.Prisma.HighlightScalarWhereInput> = z.object({
-  AND: z.union([z.lazy(() => HighlightScalarWhereInputSchema), z.lazy(() => HighlightScalarWhereInputSchema).array()]).optional(),
-  OR: z.lazy(() => HighlightScalarWhereInputSchema).array().optional(),
-  NOT: z.union([z.lazy(() => HighlightScalarWhereInputSchema), z.lazy(() => HighlightScalarWhereInputSchema).array()]).optional(),
-  id: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
-  page: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
-  highlight: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
-  voice: z.union([z.lazy(() => BoolFilterSchema), z.boolean()]).optional(),
-  combination: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
-}).strict();
-
-export const BookCreateWithoutHighlightInputSchema: z.ZodType<PrismaClient.Prisma.BookCreateWithoutHighlightInput> = z.object({
-  user: z.string(),
-  book: z.number(),
-}).strict();
-
-export const BookUncheckedCreateWithoutHighlightInputSchema: z.ZodType<PrismaClient.Prisma.BookUncheckedCreateWithoutHighlightInput> = z.object({
-  id: z.number().optional(),
-  user: z.string(),
-  book: z.number(),
-}).strict();
-
-export const BookCreateOrConnectWithoutHighlightInputSchema: z.ZodType<PrismaClient.Prisma.BookCreateOrConnectWithoutHighlightInput> = z.object({
-  where: z.lazy(() => BookWhereUniqueInputSchema),
-  create: z.union([z.lazy(() => BookCreateWithoutHighlightInputSchema), z.lazy(() => BookUncheckedCreateWithoutHighlightInputSchema)]),
-}).strict();
-
-export const BookUpsertWithoutHighlightInputSchema: z.ZodType<PrismaClient.Prisma.BookUpsertWithoutHighlightInput> = z.object({
-  update: z.union([z.lazy(() => BookUpdateWithoutHighlightInputSchema), z.lazy(() => BookUncheckedUpdateWithoutHighlightInputSchema)]),
-  create: z.union([z.lazy(() => BookCreateWithoutHighlightInputSchema), z.lazy(() => BookUncheckedCreateWithoutHighlightInputSchema)]),
-}).strict();
-
-export const BookUpdateWithoutHighlightInputSchema: z.ZodType<PrismaClient.Prisma.BookUpdateWithoutHighlightInput> = z.object({
-  user: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  book: z.union([z.number(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-}).strict();
-
-export const BookUncheckedUpdateWithoutHighlightInputSchema: z.ZodType<PrismaClient.Prisma.BookUncheckedUpdateWithoutHighlightInput> = z.object({
-  id: z.union([z.number(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  user: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  book: z.union([z.number(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-}).strict();
-
 export const AccountCreateManyUserInputSchema: z.ZodType<PrismaClient.Prisma.AccountCreateManyUserInput> = z.object({
   id: z.string().cuid().optional(),
   type: z.string(),
@@ -2248,33 +1862,6 @@ export const SessionUncheckedUpdateManyWithoutSessionsInputSchema: z.ZodType<Pri
   id: z.union([z.string().cuid(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
   sessionToken: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
   expires: z.union([z.date(), z.lazy(() => DateTimeFieldUpdateOperationsInputSchema)]).optional(),
-}).strict();
-
-export const HighlightCreateManyBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateManyBookInput> = z.object({
-  id: z.number().int().optional(),
-  page: z.number(),
-  highlight: z.string(),
-  voice: z.boolean(),
-}).strict();
-
-export const HighlightUpdateWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUpdateWithoutBookInput> = z.object({
-  page: z.union([z.number(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  highlight: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  voice: z.union([z.boolean(), z.lazy(() => BoolFieldUpdateOperationsInputSchema)]).optional(),
-}).strict();
-
-export const HighlightUncheckedUpdateWithoutBookInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUncheckedUpdateWithoutBookInput> = z.object({
-  id: z.union([z.number(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  page: z.union([z.number(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  highlight: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  voice: z.union([z.boolean(), z.lazy(() => BoolFieldUpdateOperationsInputSchema)]).optional(),
-}).strict();
-
-export const HighlightUncheckedUpdateManyWithoutHighlightInputSchema: z.ZodType<PrismaClient.Prisma.HighlightUncheckedUpdateManyWithoutHighlightInput> = z.object({
-  id: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  page: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
-  highlight: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
-  voice: z.union([z.boolean(), z.lazy(() => BoolFieldUpdateOperationsInputSchema)]).optional(),
 }).strict();
 
 /////////////////////////////////////////
@@ -2599,7 +2186,6 @@ export const VerificationTokenFindUniqueOrThrowArgsSchema: z.ZodType<PrismaClien
 
 export const BookFindFirstArgsSchema: z.ZodType<PrismaClient.Prisma.BookFindFirstArgs> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereInputSchema.optional(),
   orderBy: z.union([BookOrderByWithRelationInputSchema.array(), BookOrderByWithRelationInputSchema]).optional(),
   cursor: BookWhereUniqueInputSchema.optional(),
@@ -2610,7 +2196,6 @@ export const BookFindFirstArgsSchema: z.ZodType<PrismaClient.Prisma.BookFindFirs
 
 export const BookFindFirstOrThrowArgsSchema: z.ZodType<PrismaClient.Prisma.BookFindFirstOrThrowArgs> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereInputSchema.optional(),
   orderBy: z.union([BookOrderByWithRelationInputSchema.array(), BookOrderByWithRelationInputSchema]).optional(),
   cursor: BookWhereUniqueInputSchema.optional(),
@@ -2621,7 +2206,6 @@ export const BookFindFirstOrThrowArgsSchema: z.ZodType<PrismaClient.Prisma.BookF
 
 export const BookFindManyArgsSchema: z.ZodType<PrismaClient.Prisma.BookFindManyArgs> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereInputSchema.optional(),
   orderBy: z.union([BookOrderByWithRelationInputSchema.array(), BookOrderByWithRelationInputSchema]).optional(),
   cursor: BookWhereUniqueInputSchema.optional(),
@@ -2632,7 +2216,6 @@ export const BookFindManyArgsSchema: z.ZodType<PrismaClient.Prisma.BookFindManyA
 
 export const BookAggregateArgsSchema: z.ZodType<PrismaClient.Prisma.BookAggregateArgs> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereInputSchema.optional(),
   orderBy: z.union([BookOrderByWithRelationInputSchema.array(), BookOrderByWithRelationInputSchema]).optional(),
   cursor: BookWhereUniqueInputSchema.optional(),
@@ -2642,7 +2225,6 @@ export const BookAggregateArgsSchema: z.ZodType<PrismaClient.Prisma.BookAggregat
 
 export const BookGroupByArgsSchema: z.ZodType<PrismaClient.Prisma.BookGroupByArgs> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereInputSchema.optional(),
   orderBy: z.union([BookOrderByWithAggregationInputSchema.array(), BookOrderByWithAggregationInputSchema]).optional(),
   by: BookScalarFieldEnumSchema.array(),
@@ -2653,80 +2235,12 @@ export const BookGroupByArgsSchema: z.ZodType<PrismaClient.Prisma.BookGroupByArg
 
 export const BookFindUniqueArgsSchema: z.ZodType<PrismaClient.Prisma.BookFindUniqueArgs> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereUniqueInputSchema,
 }).strict();
 
 export const BookFindUniqueOrThrowArgsSchema: z.ZodType<PrismaClient.Prisma.BookFindUniqueOrThrowArgs> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereUniqueInputSchema,
-}).strict();
-
-export const HighlightFindFirstArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightFindFirstArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereInputSchema.optional(),
-  orderBy: z.union([HighlightOrderByWithRelationInputSchema.array(), HighlightOrderByWithRelationInputSchema]).optional(),
-  cursor: HighlightWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: HighlightScalarFieldEnumSchema.array().optional(),
-}).strict();
-
-export const HighlightFindFirstOrThrowArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightFindFirstOrThrowArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereInputSchema.optional(),
-  orderBy: z.union([HighlightOrderByWithRelationInputSchema.array(), HighlightOrderByWithRelationInputSchema]).optional(),
-  cursor: HighlightWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: HighlightScalarFieldEnumSchema.array().optional(),
-}).strict();
-
-export const HighlightFindManyArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightFindManyArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereInputSchema.optional(),
-  orderBy: z.union([HighlightOrderByWithRelationInputSchema.array(), HighlightOrderByWithRelationInputSchema]).optional(),
-  cursor: HighlightWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: HighlightScalarFieldEnumSchema.array().optional(),
-}).strict();
-
-export const HighlightAggregateArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightAggregateArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereInputSchema.optional(),
-  orderBy: z.union([HighlightOrderByWithRelationInputSchema.array(), HighlightOrderByWithRelationInputSchema]).optional(),
-  cursor: HighlightWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-}).strict();
-
-export const HighlightGroupByArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightGroupByArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereInputSchema.optional(),
-  orderBy: z.union([HighlightOrderByWithAggregationInputSchema.array(), HighlightOrderByWithAggregationInputSchema]).optional(),
-  by: HighlightScalarFieldEnumSchema.array(),
-  having: HighlightScalarWhereWithAggregatesInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-}).strict();
-
-export const HighlightFindUniqueArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightFindUniqueArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereUniqueInputSchema,
-}).strict();
-
-export const HighlightFindUniqueOrThrowArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightFindUniqueOrThrowArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereUniqueInputSchema,
 }).strict();
 
 export const ExampleCreateArgsSchema: z.ZodType<PrismaClient.Prisma.ExampleCreateArgs> = z.object({
@@ -2928,13 +2442,11 @@ export const VerificationTokenDeleteManyArgsSchema: z.ZodType<PrismaClient.Prism
 
 export const BookCreateArgsSchema: z.ZodType<Omit<PrismaClient.Prisma.BookCreateArgs, "data"> & { data: z.infer<typeof BookCreateInputSchema> | z.infer<typeof BookUncheckedCreateInputSchema> }> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   data: z.union([BookCreateInputSchema, BookUncheckedCreateInputSchema]),
 }).strict();
 
 export const BookUpsertArgsSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUpsertArgs, "create" | "update"> & { create: z.infer<typeof BookCreateInputSchema> | z.infer<typeof BookUncheckedCreateInputSchema>, update: z.infer<typeof BookUpdateInputSchema> | z.infer<typeof BookUncheckedUpdateInputSchema> }> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereUniqueInputSchema,
   create: z.union([BookCreateInputSchema, BookUncheckedCreateInputSchema]),
   update: z.union([BookUpdateInputSchema, BookUncheckedUpdateInputSchema]),
@@ -2949,13 +2461,11 @@ export const BookCreateManyArgsSchema: z.ZodType<Omit<PrismaClient.Prisma.BookCr
 
 export const BookDeleteArgsSchema: z.ZodType<PrismaClient.Prisma.BookDeleteArgs> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   where: BookWhereUniqueInputSchema,
 }).strict();
 
 export const BookUpdateArgsSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUpdateArgs, "data"> & { data: z.infer<typeof BookUpdateInputSchema> | z.infer<typeof BookUncheckedUpdateInputSchema>, }> = z.object({
   select: BookSelectSchema.optional(),
-  include: BookIncludeSchema.optional(),
   data: z.union([BookUpdateInputSchema, BookUncheckedUpdateInputSchema]),
   where: BookWhereUniqueInputSchema,
 }).strict();
@@ -2967,45 +2477,4 @@ export const BookUpdateManyArgsSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUp
 
 export const BookDeleteManyArgsSchema: z.ZodType<PrismaClient.Prisma.BookDeleteManyArgs> = z.object({
   where: BookWhereInputSchema.optional(),
-}).strict();
-
-export const HighlightCreateArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  data: z.union([HighlightCreateInputSchema, HighlightUncheckedCreateInputSchema]),
-}).strict();
-
-export const HighlightUpsertArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightUpsertArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereUniqueInputSchema,
-  create: z.union([HighlightCreateInputSchema, HighlightUncheckedCreateInputSchema]),
-  update: z.union([HighlightUpdateInputSchema, HighlightUncheckedUpdateInputSchema]),
-}).strict();
-
-export const HighlightCreateManyArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightCreateManyArgs> = z.object({
-  data: HighlightCreateManyInputSchema.array(),
-  skipDuplicates: z.boolean().optional(),
-}).strict();
-
-export const HighlightDeleteArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightDeleteArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  where: HighlightWhereUniqueInputSchema,
-}).strict();
-
-export const HighlightUpdateArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightUpdateArgs> = z.object({
-  select: HighlightSelectSchema.optional(),
-  include: HighlightIncludeSchema.optional(),
-  data: z.union([HighlightUpdateInputSchema, HighlightUncheckedUpdateInputSchema]),
-  where: HighlightWhereUniqueInputSchema,
-}).strict();
-
-export const HighlightUpdateManyArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightUpdateManyArgs> = z.object({
-  data: z.union([HighlightUpdateManyMutationInputSchema, HighlightUncheckedUpdateManyInputSchema]),
-  where: HighlightWhereInputSchema.optional(),
-}).strict();
-
-export const HighlightDeleteManyArgsSchema: z.ZodType<PrismaClient.Prisma.HighlightDeleteManyArgs> = z.object({
-  where: HighlightWhereInputSchema.optional(),
 }).strict();
