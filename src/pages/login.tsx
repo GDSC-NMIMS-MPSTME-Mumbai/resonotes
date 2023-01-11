@@ -1,7 +1,8 @@
-import { signIn, getCsrfToken, getProviders } from "next-auth/react";
+import { signIn, getCsrfToken, getProviders, useSession } from "next-auth/react";
 import Image from "next/image";
 import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next/types";
 import styles from "@/styles/login.module.css";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const providers = await getProviders();
@@ -15,13 +16,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const Signin: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ csrfToken, providers }) => {
+
+    const { data: session } = useSession();
+
+    const router = useRouter()
+
+    if (session) {
+        router.push("/dashboard");
+    }
+
     return (
         <div style={{ overflow: "hidden", position: "relative" }}>
             <div className={styles.wrapper} />
             <div className={styles.content}>
                 <div className={styles.cardWrapper}>
                     <Image
-                        src="/katalog_full.svg"
+                        src="/logo_big.png"
                         width={196}
                         height={64}
                         alt="App Logo"
@@ -33,12 +43,6 @@ const Signin: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
                             type="hidden"
                             defaultValue={csrfToken}
                         />
-                        <input
-                            placeholder="Email (Not Setup - Please Use Github)"
-                            // size="large"
-                        />
-                        <button className={styles.primaryBtn}>Submit</button>
-                        <hr />
                         {providers &&
                             Object.values(providers).map((provider) => (
                                 <div
@@ -53,7 +57,6 @@ const Signin: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
                     </div>
                 </div>
             </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
                 src="/login_pattern.svg"
                 alt="Pattern Background"

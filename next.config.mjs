@@ -25,5 +25,14 @@ const config = {
             },
         ],
     },
+    async redirects() {
+        return [
+          {
+            source: '/logout',
+            destination: '/api/auth/signout',
+            permanent: true,
+          },
+        ]
+      },
 };
 export default config;
