@@ -7,7 +7,6 @@ import {
     Text,
     Button,
 } from "@mantine/core";
-import { IconChevronRight, IconChevronLeft } from "@tabler/icons";
 import Link from "next/link";
 import type { FC } from "react";
 
