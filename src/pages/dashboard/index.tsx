@@ -1,8 +1,10 @@
+import Sidebar from "@/components/Sidebar";
+import App from "@/components/App";
+import { Flex } from "@mantine/core";
+import Head from "next/head";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import { useSession } from "next-auth/react";
-import Head from "next/head";
 import { getServerAuthSession } from "../../server/auth";
-import SideBar from "@/components/SideBar";
 
 export const getServerSideProps = async (
     context: GetServerSidePropsContext
@@ -28,15 +30,22 @@ const Dashboard: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Resonotes Dashboard</title>
-                {/* TODO Add a better description */}
+                <title>Dashboard | Resonotes</title>
                 <meta
                     name="description"
-                    content="Create, Edit and View book highlights"
-                />{" "}
+                    content="Resonotes book highlights app."
+                />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="min-h-screen bg-white">
-                <SideBar />
+            <main>
+                <Flex>
+                    <Sidebar />
+                    <App />
+                </Flex>
             </main>
         </>
     );

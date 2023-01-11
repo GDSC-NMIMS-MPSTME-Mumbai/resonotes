@@ -1,3 +1,5 @@
+import Header from "@/components/Home/Header";
+import { Box, Flex, Image, Title } from "@mantine/core";
 import { type NextPage } from "next";
 import Head from "next/head";
 
@@ -6,13 +8,18 @@ const Home: NextPage = () => {
         <>
             <Head>
                 <title>Resonotes</title>
-                {/* TODO Add a better description */}
-                <meta name="description" content="Resonotes Home Page" />{" "}
+                <meta name="description" content="Resonotes Book Highlights App" />
             </Head>
-            <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-                <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-                    Resonotes Home Page
-                </h1>
+            <main>
+                <Box bg="yellow" mih="100vh">
+                    <Header links={[{ link: '/dashboard', label: 'Go To Dashboard' }]} />
+                    <Flex align="center" justify="center" direction="column" gap="lg" pb={100} mt="-30px">
+                        <Title order={2}>Resonotes Book Highlights Taking App</Title>
+                        <Box w="90%" maw="1200px">
+                            <Image src="/images/hero.png" alt="Hero Image" radius="sm" />
+                        </Box>
+                    </Flex>
+                </Box>
             </main>
         </>
     );
