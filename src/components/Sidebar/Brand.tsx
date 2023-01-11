@@ -8,9 +8,7 @@ import {
 import { IconSun, IconMoonStars } from '@tabler/icons';
 import type { FC } from 'react';
 
-interface Props {}
-
-const Brand: FC<Props> = () => {
+const Brand: FC = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   return (
