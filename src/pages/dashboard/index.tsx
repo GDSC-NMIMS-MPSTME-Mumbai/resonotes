@@ -6,7 +6,7 @@ import type { GetServerSidePropsContext, NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { getServerAuthSession } from "../../server/auth";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const getServerSideProps = async (
     context: GetServerSidePropsContext
@@ -23,9 +23,11 @@ const Dashboard: NextPage = () => {
 
     const router = useRouter();
 
-    if (status === "unauthenticated") {
-        router.push('/login');
-    }
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push('/login');
+        }
+    }, [])
 
     const [activeBook, setActiveBook] = useState("");
 

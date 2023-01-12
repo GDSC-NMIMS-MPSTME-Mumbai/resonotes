@@ -13,7 +13,7 @@ const Home: NextPage = () => {
             <main>
                 <Box bg="yellow" mih="100vh">
                     <Header links={[{ link: '/dashboard', label: 'Go To Dashboard' }]} />
-                    <Flex align="center" justify="center" direction="column" gap="lg" pb={100} mt="-30px">
+                    <Flex align="center" justify="center" direction="column" gap="lg" mt="-30px">
                         <Title order={2}>Resonotes Book Highlights Taking App</Title>
                         <Box w="90%" maw="1200px">
                             <Image src="/images/hero.png" alt="Hero Image" radius="sm" />

@@ -3,13 +3,15 @@ import { closeAllModals } from "@mantine/modals";
 import { type FC, useEffect, useState } from "react";
 import BookList from "./BookList";
 import Search from "./Search";
+import { getAuthorData, titleCase } from '../../utils/helpers'
 
 type props = {
+    activeBook: string;
     setActiveBook: (book: string) => void;
     refetch: () => void;
 };
 
-const AddBook: FC<props> = ({ setActiveBook, refetch }) => {
+const AddBook: FC<props> = ({ setActiveBook, refetch, activeBook }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
@@ -17,16 +19,6 @@ const AddBook: FC<props> = ({ setActiveBook, refetch }) => {
         refetch();
         setActiveBook(data.book);
     }});
-
-    function titleCase(str: string) {
-        const splitStr = str.toLowerCase().split(" ");
-        for (let i = 0; i < splitStr.length; i++) {
-            splitStr[i] =
-                // @ts-ignore
-                splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-        }
-        return splitStr.join(" ");
-    }
 
     useEffect(() => {
         if (!searchQuery) {
@@ -42,7 +34,7 @@ const AddBook: FC<props> = ({ setActiveBook, refetch }) => {
                     const processed = data.items.map((item: any) => {
                         return {
                             title: item.volumeInfo.title,
-                            authors: item.volumeInfo.authors,
+                            author: getAuthorData(item.volumeInfo.authors),
                             thumbnail: item.volumeInfo.imageLinks?.thumbnail,
                             id: item.id,
                         };
@@ -66,7 +58,7 @@ const AddBook: FC<props> = ({ setActiveBook, refetch }) => {
                     setSearchQuery(event.target.value);
                 }}
             />
-            <BookList books={searchResults} onClick={handleSumit} />
+            <BookList books={searchResults} onClick={handleSumit} activeBook={activeBook} searchResult={true} />
         </div>
     );
 };

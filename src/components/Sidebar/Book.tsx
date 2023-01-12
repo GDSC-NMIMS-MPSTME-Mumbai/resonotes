@@ -1,4 +1,6 @@
-import { UnstyledButton, Text, Flex, Image } from "@mantine/core";
+import { api } from "@/utils/api";
+import { UnstyledButton, Text, Flex, Image, ActionIcon } from "@mantine/core";
+import { IconTrash } from "@tabler/icons";
 import type { FC } from "react";
 
 export interface BookType {
@@ -6,35 +8,67 @@ export interface BookType {
     title: string;
     author: string;
     thumbnail: string;
+    searchResult?: boolean;
 }
 
-const Book: FC<BookType & { onClick: (event: any) => void }> = ({
+type Props = BookType & {
+    onClick: (event: any) => void;
+    activeBook: string;
+    refresh: () => void;
+};
+
+const Book: FC<Props> = ({
     id,
     title,
     author,
     thumbnail,
     onClick,
+    activeBook,
+    searchResult = false,
+    refresh
 }) => {
+    const mutation = api.books.delete.useMutation();
+
     return (
         <UnstyledButton
-            sx={(theme) => ({
-                display: "block",
-                width: "100%",
-                padding: theme.spacing.xs,
-                borderRadius: theme.radius.sm,
-                color:
-                    theme.colorScheme === "dark"
-                        ? theme.colors.dark[0]
-                        : theme.black,
+            display="block"
+            pos="relative"
+            w="100%"
+            p="xs"
+            sx={(theme) => {
+                if (id === activeBook) {
+                    return {
+                        borderRadius: theme.radius.sm,
+                        color:
+                            theme.colorScheme === "dark"
+                                ? theme.colors.dark[0]
+                                : theme.black,
+                        backgroundColor:
+                            theme.colorScheme === "dark"
+                                ? theme.colors.dark[5]
+                                : theme.colors.gray[1],
+                    };
+                }
 
-                "&:hover": {
-                    backgroundColor:
+                return {
+                    borderRadius: theme.radius.sm,
+                    color:
                         theme.colorScheme === "dark"
-                            ? theme.colors.dark[6]
-                            : theme.colors.gray[0],
-                },
-            })}
-            onClick={() => {onClick(id)}}
+                            ? theme.colors.dark[0]
+                            : theme.black,
+
+                    "&:hover": {
+                        backgroundColor:
+                            theme.colorScheme === "dark"
+                                ? theme.colors.dark[6]
+                                : theme.colors.gray[0],
+                    },
+                };
+            }}
+            className="book"
+            onClick={() => {
+                onClick(id);
+            }}
         >
             <Flex gap="sm">
                 <Image
@@ -46,9 +80,30 @@ const Book: FC<BookType & { onClick: (event: any) => void }> = ({
                     <Text fz="lg" fw={700}>
                         {title}
                     </Text>
-                    <Text>{author}</Text>
+                    <Text>{author || "Anonymous"}</Text>
                 </Flex>
             </Flex>
+            {!searchResult && (
+                <ActionIcon
+                    className="delete-icon"
+                    pos="absolute"
+                    top={5}
+                    right={5}
+                    color="gray"
+                    variant="transparent"
+                    size="md"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        mutation.mutate({ book: id }, { onSuccess: () => {
+                            refresh()
+                            if (activeBook && id === activeBook) 
+                                onClick("")
+                        }});
+                    }}
+                >
+                    <IconTrash size={18} />
+                </ActionIcon>
+            )}
         </UnstyledButton>
     );
 };

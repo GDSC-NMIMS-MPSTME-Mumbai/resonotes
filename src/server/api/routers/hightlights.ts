@@ -13,10 +13,12 @@ export const highlightsRouter = createTRPCRouter({
 			throw new Error("Book not found in Your Library");
 		}
 
-		return files[0]
+		const file = await bucket.file(`${userid}/${input.book}.html`).download();
+
+		return file[0].toString('utf8');
 	}),
 
-	set: protectedProcedure.input(BookCreateInputSchema.and(z.object({ highlight: z.string() }))).mutation(async ({ ctx, input }) => {
+	set: protectedProcedure.input(z.object({ highlight: z.string(), book: z.string() })).mutation(async ({ ctx, input }) => {
 		const userid = ctx.session.user.id;
 
 		return await bucket.file(`${userid}/${input.book}.html`).save(input.highlight, { resumable: false })

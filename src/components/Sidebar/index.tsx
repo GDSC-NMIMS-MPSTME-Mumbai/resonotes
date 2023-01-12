@@ -34,7 +34,7 @@ const Sidebar: FC<props> = ({ activeBook, setActiveBook }) => {
                         onClick={() => {
                             openModal({
                                 title: "Add a book!",
-                                children: <AddBook setActiveBook={setActiveBook} refetch={refetch} />,
+                                children: <AddBook setActiveBook={setActiveBook} refetch={refetch} activeBook={activeBook} />,
                                 centered: true,
                             });
                         }}
@@ -44,7 +44,7 @@ const Sidebar: FC<props> = ({ activeBook, setActiveBook }) => {
                 </Navbar.Section>
 
                 <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
-                    <BookList books={books} onClick={(event) => {setActiveBook(event.target.id)}} />
+                    <BookList books={books} onClick={setActiveBook} activeBook={activeBook} refresh={refetch} />
                 </Navbar.Section>
 
                 <Navbar.Section>
