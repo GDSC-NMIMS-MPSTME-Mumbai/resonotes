@@ -122,7 +122,7 @@ export const VerificationTokenSchema = z.object({
 export const BookSchema = z.object({
   id: z.number().int(),
   // omitted: user: z.string(),
-  book: z.number().int(),
+  book: z.string(),
 });
 
 export const BookOptionalDefaultsSchema = BookSchema.merge(
@@ -501,7 +501,7 @@ export const BookWhereInputSchema: z.ZodType<PrismaClient.Prisma.BookWhereInput>
   NOT: z.union([z.lazy(() => BookWhereInputSchema), z.lazy(() => BookWhereInputSchema).array()]).optional(),
   id: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
   user: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
-  book: z.union([z.lazy(() => IntFilterSchema), z.number()]).optional(),
+  book: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
 }).strict();
 
 export const BookOrderByWithRelationInputSchema: z.ZodType<PrismaClient.Prisma.BookOrderByWithRelationInput> = z.object({
@@ -531,7 +531,7 @@ export const BookScalarWhereWithAggregatesInputSchema: z.ZodType<PrismaClient.Pr
   NOT: z.union([z.lazy(() => BookScalarWhereWithAggregatesInputSchema), z.lazy(() => BookScalarWhereWithAggregatesInputSchema).array()]).optional(),
   id: z.union([z.lazy(() => IntWithAggregatesFilterSchema), z.number()]).optional(),
   user: z.union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()]).optional(),
-  book: z.union([z.lazy(() => IntWithAggregatesFilterSchema), z.number()]).optional(),
+  book: z.union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()]).optional(),
 }).strict();
 
 export const ExampleCreateInputSchema: z.ZodType<PrismaClient.Prisma.ExampleCreateInput> = z.object({
@@ -836,41 +836,41 @@ export const VerificationTokenUncheckedUpdateManyInputSchema: z.ZodType<PrismaCl
 
 export const BookCreateInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookCreateInput, "user">> = z.object({
   // omitted: user: z.string(),
-  book: z.number().int(),
+  book: z.string(),
 }).strict();
 
 export const BookUncheckedCreateInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUncheckedCreateInput, "user">> = z.object({
   id: z.number().int().optional(),
   // omitted: user: z.string(),
-  book: z.number().int(),
+  book: z.string(),
 }).strict();
 
 export const BookUpdateInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUpdateInput, "user">> = z.object({
   // omitted: user: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  book: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
+  book: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
 }).strict();
 
 export const BookUncheckedUpdateInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUncheckedUpdateInput, "user">> = z.object({
   id: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
   // omitted: user: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  book: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
+  book: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
 }).strict();
 
 export const BookCreateManyInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookCreateManyInput, "user">> = z.object({
   id: z.number().int().optional(),
   // omitted: user: z.string(),
-  book: z.number().int(),
+  book: z.string(),
 }).strict();
 
 export const BookUpdateManyMutationInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUpdateManyMutationInput, "user">> = z.object({
   // omitted: user: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  book: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
+  book: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
 }).strict();
 
 export const BookUncheckedUpdateManyInputSchema: z.ZodType<Omit<PrismaClient.Prisma.BookUncheckedUpdateManyInput, "user">> = z.object({
   id: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
   // omitted: user: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  book: z.union([z.number().int(), z.lazy(() => IntFieldUpdateOperationsInputSchema)]).optional(),
+  book: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
 }).strict();
 
 export const StringFilterSchema: z.ZodType<PrismaClient.Prisma.StringFilter> = z.object({
@@ -1204,7 +1204,6 @@ export const BookCountOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma
 
 export const BookAvgOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.BookAvgOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  book: z.lazy(() => SortOrderSchema).optional(),
 }).strict();
 
 export const BookMaxOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.BookMaxOrderByAggregateInput> = z.object({
@@ -1221,7 +1220,6 @@ export const BookMinOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.B
 
 export const BookSumOrderByAggregateInputSchema: z.ZodType<PrismaClient.Prisma.BookSumOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  book: z.lazy(() => SortOrderSchema).optional(),
 }).strict();
 
 export const IntWithAggregatesFilterSchema: z.ZodType<PrismaClient.Prisma.IntWithAggregatesFilter> = z.object({

@@ -7,7 +7,7 @@
     left: 0px;
     width: 70%;
     height: 150%;
-    background-color: #002140;
+    background-color: #00fff2;
     z-index: 2;
 }
 
@@ -89,8 +89,8 @@
 
 button.primaryBtn {
     color: #fff;
-    background: #002140;
-    border-color: #002140;
+    background: #00fff2;
+    border-color: #00fff2;
     text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
     box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
 }

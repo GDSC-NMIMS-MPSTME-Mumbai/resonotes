@@ -1,17 +1,19 @@
 import {
     Box,
-    UnstyledButton,
     Group,
     Avatar,
     useMantineTheme,
     Text,
     Button,
 } from "@mantine/core";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import type { FC } from "react";
 
 const User: FC = () => {
     const theme = useMantineTheme();
+
+    const { data: session } = useSession();
 
     return (
         <Box
@@ -24,7 +26,7 @@ const User: FC = () => {
                 }`,
             }}
         >
-            <UnstyledButton
+            <Box
                 pos="relative"
                 sx={{
                     display: "block",
@@ -46,15 +48,15 @@ const User: FC = () => {
             >
                 <Group>
                     <Avatar
-                        src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
+                        src={session?.user?.image}
                         radius="xl"
                     />
-                    <Box sx={{ flex: 1 }}>
-                        <Text size="sm" weight={500}>
-                            Rachel Nichols
+                    <Box sx={{ flex: 1 }} w={10}>
+                        <Text size="sm" weight={500} truncate>
+                            {session?.user?.name}
                         </Text>
-                        <Text color="dimmed" size="xs">
-                            rachel31@gmail.com
+                        <Text color="dimmed" size="xs" truncate>
+                            {session?.user?.email}
                         </Text>
                     </Box>
 
@@ -62,7 +64,7 @@ const User: FC = () => {
                         <Button color="gray">Log Out</Button>
                     </Link>
                 </Group>
-            </UnstyledButton>
+            </Box>
         </Box>
     );
 };

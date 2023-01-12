@@ -67,5 +67,5 @@ model VerificationToken {
 model Book {
   id        Int         @id @default(autoincrement())
   user      String /// @zod.custom.omit([model, input])
-  book      Int
+  book      String
 }

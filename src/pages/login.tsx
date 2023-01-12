@@ -1,8 +1,8 @@
 import { signIn, getCsrfToken, getProviders, useSession } from "next-auth/react";
-import Image from "next/image";
 import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next/types";
 import styles from "@/styles/login.module.css";
 import { useRouter } from "next/router";
+import { Image } from "@mantine/core"
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const providers = await getProviders();
@@ -31,9 +31,8 @@ const Signin: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
             <div className={styles.content}>
                 <div className={styles.cardWrapper}>
                     <Image
-                        src="/logo_big.png"
+                        src="/images/logo_big.png"
                         width={196}
-                        height={64}
                         alt="App Logo"
                         style={{ height: "85px", marginBottom: "20px" }}
                     />
@@ -49,7 +48,7 @@ const Signin: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
                                     key={provider.name}
                                     style={{ marginBottom: 0 }}
                                 >
-                                    <button onClick={() => signIn(provider.id)}>
+                                    <button onClick={() => signIn(provider.id, { callbackUrl: "/dashboard" })}>
                                         Sign in with {provider.name}
                                     </button>
                                 </div>

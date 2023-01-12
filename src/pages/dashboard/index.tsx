@@ -5,6 +5,8 @@ import Head from "next/head";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { getServerAuthSession } from "../../server/auth";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 export const getServerSideProps = async (
     context: GetServerSidePropsContext
@@ -17,15 +19,15 @@ export const getServerSideProps = async (
 };
 
 const Dashboard: NextPage = () => {
-    // const { data: session, status } = useSession();
+    const { status } = useSession();
 
-    // if (status === "loading") {
-    //     return <p>Loading...</p>;
-    // }
+    const router = useRouter();
 
-    // if (status === "unauthenticated") {
-    //     return <p>Access Denied</p>;
-    // }
+    if (status === "unauthenticated") {
+        router.push('/login');
+    }
+
+    const [activeBook, setActiveBook] = useState("");
 
     return (
         <>
@@ -43,8 +45,8 @@ const Dashboard: NextPage = () => {
             </Head>
             <main>
                 <Flex>
-                    <Sidebar />
-                    <App />
+                    <Sidebar activeBook={activeBook} setActiveBook={setActiveBook} />
+                    <App activeBook={activeBook} setActiveBook={setActiveBook} />
                 </Flex>
             </main>
         </>
